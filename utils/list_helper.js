@@ -23,8 +23,48 @@ const favoriteBlog = (blogs) => {
     return blogs[0]
 }
 
+const orderAuthorsByBlogCount = (blogs) => {
+    const result = blogs
+        .reduce((authors, line) => {
+            authors[line.author] = authors[line.author] || 0
+            authors[line.author] += 1
+            return authors
+        }, {})
+    return Object.entries(result)
+        .map(a => {
+            return { author: a[0], blogs: a[1] }
+        })
+        .sort((a, b) => b.blogs - a.blogs)
+}
+
+const mostBlogs = (blogs) => {
+    return orderAuthorsByBlogCount(blogs)[0]
+}
+
+const orderAuthorsByBlogLikes = (blogs) => {
+    const result = blogs
+        .reduce((authors, line) => {
+            const likes = line.likes
+            authors[line.author] = authors[line.author] || 0
+            authors[line.author] += likes
+            return authors
+        }, {})
+    return Object.entries(result)
+        .map(a => {
+            return { author: a[0], likes: a[1] }
+        })
+        .sort((a, b) => b.likes - a.likes)
+}
+
+const mostLikes = (blogs) => {
+    return orderAuthorsByBlogLikes(blogs)[0]
+}
+
+
 module.exports = {
     dummy,
     totalLikes,
-    favoriteBlog
+    favoriteBlog,
+    mostBlogs,
+    mostLikes
 }

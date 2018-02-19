@@ -26,7 +26,6 @@ blogsRouter.get('/:id', async (request, response) => {
     }
 })
 
-
 blogsRouter.post('/', async (request, response) => {
     const body = request.body
 
